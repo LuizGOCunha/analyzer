@@ -1,11 +1,13 @@
 import os
 
-def explore(path, ignored:list=[]):
-    '''
+
+def explore(path, ignored: list = []):
+    """
     Recursively explores all directories inside a given path.
     Has list of directories to be ignored, if it should prove necessary.
-    '''
+    """
     directory_map = {}
+
     def func(path):
         nonlocal ignored
         nonlocal directory_map
@@ -22,9 +24,10 @@ def explore(path, ignored:list=[]):
                 continue
             elif os.path.isdir(abs_path):
                 func(abs_path)
-    
+
     func(path)
     return directory_map
+
 
 if __name__ == "__main__":
     directory_map = explore(".", ignored=[".git", "__pycache__"])
