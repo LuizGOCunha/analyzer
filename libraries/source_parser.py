@@ -27,7 +27,8 @@ class Parser:
         return internal_calls
 
 
-with open("libraries/mapper.py") as file:
-    source = file.read()
-    p = Parser(source)
-    print(p.encapsulated_callables())
+if __name__ == "__main__":
+    with open("libraries/mapper.py") as file:
+        source = file.read()
+        p = Parser(source)
+        print(p.encapsulated_callables())
