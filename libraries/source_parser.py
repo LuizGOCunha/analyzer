@@ -17,6 +17,7 @@ class Parser:
         tree = ast.parse(source)
         internal_calls = {}
         for node in ast.iter_child_nodes(tree):
+            # Right now only identifies functions
             if isinstance(node, ast.FunctionDef):
                 print(node.name)
                 internal_source = "".join([astunparse.unparse(node) for node in node.body])

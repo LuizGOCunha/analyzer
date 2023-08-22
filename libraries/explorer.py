@@ -5,6 +5,8 @@ def explore(path, ignored: list = []):
     """
     Recursively explores all directories inside a given path.
     Has list of directories to be ignored, if it should prove necessary.
+    Returns a dictionary with these items:
+    {"path/to/directory" : [list, of, items]}
     """
     directory_map = {}
 

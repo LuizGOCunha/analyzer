@@ -1,47 +1,38 @@
-import ast
-import inspect
-from pprint import pprint
-from module import func_x
+import os
+
+from explorer import explore
+from importer import get_callables
+from source_parser import Parser
 
 
-def mapper(func):
-    map = {}
+class Analyzer:
+    def __init__(self, path: str) -> None:
+        self.path = path
+        self.directories = explore(path, ignored=[".git"])
+        self.raw_map = self.__create_raw_map()
 
-    def get_called_functions(func, map):
-        source_lines, _ = inspect.getsourcelines(func)
-        source_code = "".join(source_lines)
-        tree = ast.parse(source_code)
+    def __create_raw_map(self) -> dict:
+        """
+        Create an unorganized map of an applications calls
+        Returns a dictionary with this structure:
+        {"object_name": <object>}
+        """
+        raw_map = {}
+        for path, items in self.directories.items():
+            for item in items:
+                abs_path = os.path.join(path, item)
+                callables = get_callables(abs_path)
+                if callables is not None:
+                    raw_map.update(
+                        {callable.__name__: callable for callable in callables if hasattr(callable, "__name__")}
+                    )
+        self.raw_map = raw_map
+        return raw_map
 
-        map[func] = {}
-
-        for node in ast.walk(tree):
-            if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
-                function_name = node.func.id
-                print(function_name)
-                function_object = globals().get(function_name)
-                if function_object and callable(function_object):
-                    print("got it")
-                    map[func].update({function_object: {}})
-                    get_called_functions(function_object, map[func])
-        return map
-
-    return get_called_functions(func, map)
-
-
-def func2():
-    pprint("a")
-    func_x()
-
-
-def func3():
-    func2()
-
-
-def func1():
-    func2()
-    func3()
+    def create_map(self):
+        pass
 
 
 if __name__ == "__main__":
-    called_functions = mapper(func1)
-    pprint(called_functions)
+    a = Analyzer("/home/luiz/thoughtful_repos/support/mapper/libraries/")
+    print(a.raw_map)
