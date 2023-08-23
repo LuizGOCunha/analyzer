@@ -1,8 +1,18 @@
+from pprint import pprint
+
+
+class Cls:
+    def __init__(self) -> None:
+        func_x()
+        func_y()
+
+    def method(self):
+        call1()
+        x = call2()
+
+
 def func_x():
     func_y()
-
-
-from pprint import pprint
 
 
 def func_y():
