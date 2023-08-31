@@ -4,18 +4,20 @@ import astunparse
 
 
 class Parser:
+    callable_pattern = r"[a-zA-Z0-9_.]+\("
+
     def __init__(self, source: str) -> None:
         self.source = source
 
     @property
     def all_callables(self):
-        pattern = re.compile(r"\s[a-zA-Z]+\(")
+        pattern = re.compile(self.callable_pattern)
         callables = re.findall(pattern, self.source)
         return [callable[:-1] for callable in callables]
 
     def __get_call_names_from_node(self, node):
         internal_source = "".join([astunparse.unparse(node) for node in node.body])
-        unparsed_calls = re.findall(r"[a-zA-Z0-9]+\(", internal_source)
+        unparsed_calls = re.findall(self.callable_pattern, internal_source)
         parsed_calls = [calls[:-1] for calls in unparsed_calls]
         return parsed_calls
 
@@ -41,4 +43,5 @@ if __name__ == "__main__":
     with open("libraries/module.py") as file:
         source = file.read()
         p = Parser(source)
+        print(p.all_callables)
         print(p.encapsulated_callables())
