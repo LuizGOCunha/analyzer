@@ -53,9 +53,10 @@ class FunctionDef:
         return variables
 
 
-with open("/home/luiz/thoughtful_repos/support/mapper/libraries/module.py") as file:
-    tree = ast.parse(file.read())
-    for node in ast.iter_child_nodes(tree):
-        if type(node) == ast.FunctionDef:
-            fd = FunctionDef(node)
-            print(fd.name, fd.arguments, fd.body, fd.calls, fd.docstring, fd.vars)
+if __name__ == "__main__":
+    with open("/home/luiz/thoughtful_repos/support/mapper/libraries/module.py") as file:
+        tree = ast.parse(file.read())
+        for node in ast.iter_child_nodes(tree):
+            if type(node) == ast.FunctionDef:
+                fd = FunctionDef(node)
+                print(fd.name, fd.arguments, fd.body, fd.calls, fd.docstring, fd.vars)
