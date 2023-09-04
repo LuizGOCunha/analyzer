@@ -19,18 +19,18 @@ class FunctionDef:
         for node in ast.iter_child_nodes(self.tree):
             # cold calls cases / Ex:call()
             if isinstance(node, ast.Expr) and isinstance(node.value, ast.Call):
-                # Functions
+                # Methods
                 if isinstance(node.value.func, ast.Attribute):
                     calls.append(node.value.func.attr)
-                # Methods
+                # Functions
                 elif isinstance(node.value.func, ast.Name):
                     calls.append(node.value.func.id)
             # assignment call cases / Ex: var = call()
             elif isinstance(node, ast.Assign) and isinstance(node.value, ast.Call):
-                # Functions
+                # Methods
                 if isinstance(node.value.func, ast.Attribute):
                     calls.append(node.value.func.attr)
-                # Methods
+                # Functions
                 elif isinstance(node.value.func, ast.Name):
                     calls.append(node.value.func.id)
         return calls
@@ -53,7 +53,7 @@ class FunctionDef:
         variables = []
         for node in ast.iter_child_nodes(self.tree):
             if isinstance(node, ast.Assign):
-                variables.extend([target.id for target in node.targets])
+                variables.extend([target.id for target in node.targets if isinstance(target, ast.Name)])
         return variables
 
 
