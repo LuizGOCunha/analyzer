@@ -7,12 +7,12 @@ class FunctionDef:
     def __init__(self, source: ast.FunctionDef) -> None:
         self.source = source
         self.name = self.source.name
+        self.body = self.source.body
         self.tree = ast.parse(source)
         self.arguments = self.__get_arguments()
         self.docstring = self.__get_docstring()
         self.vars = self.__get_variables()
         self.calls = self.__get_calls()
-        self.body = self.source.body
 
     def __get_calls(self):
         calls = []
@@ -38,12 +38,16 @@ class FunctionDef:
     def __get_docstring(self):
         first_item = self.source.body[0]
         if isinstance(first_item, ast.Expr) and isinstance(first_item.value, ast.Str):
-            return re.sub(r"[\n\\n]", "", unparse(first_item))
+            return re.sub(r"(\n|\\n)", "", unparse(first_item))
         return None
 
     def __get_arguments(self):
-        ast_args = ast.iter_child_nodes(self.tree).__next__().args
-        return [ast_arg.arg for ast_arg in ast_args]
+        first_iter_item = ast.iter_child_nodes(self.tree).__next__()
+        if isinstance(first_iter_item, ast.arguments):
+            ast_args = first_iter_item.args
+            return [ast_arg.arg for ast_arg in ast_args]
+        else:
+            return None
 
     def __get_variables(self):
         variables = []
