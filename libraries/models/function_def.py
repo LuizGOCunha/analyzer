@@ -3,7 +3,7 @@ import ast
 import re
 
 
-class FunctionDef:
+class FunctionMd:
     def __init__(self, source: ast.FunctionDef) -> None:
         self.source = source
         self.name = self.source.name
@@ -62,5 +62,5 @@ if __name__ == "__main__":
         tree = ast.parse(file.read())
         for node in ast.iter_child_nodes(tree):
             if type(node) == ast.FunctionDef:
-                fd = FunctionDef(node)
+                fd = FunctionMd(node)
                 print(fd.name, fd.arguments, fd.body, fd.calls, fd.docstring, fd.vars)

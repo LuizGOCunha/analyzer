@@ -1,11 +1,11 @@
 from __future__ import annotations
 import ast
 from exceptions import NonMethodError
-from function_def import FunctionDef
+from function_def import FuncDef
 
 
-class MethodDef(FunctionDef):
-    def __init__(self, source: FunctionDef, class_object: ClassDef) -> None:
+class MethodMd(FuncDef):
+    def __init__(self, source: FuncDef, class_object: ClassMd) -> None:
         super().__init__(source)
         self.class_object = class_object
         self.attributes = self.__get_attributes()
@@ -22,10 +22,10 @@ class MethodDef(FunctionDef):
         return list(set(attributes))
 
 
-class ClassDef(FunctionDef):
+class ClassMd(FuncDef):
     def __init__(self, source: ast.ClassDef) -> None:
         super().__init__(source)
-        self.methods = [MethodDef(item, self) for item in self.body if isinstance(item, ast.FunctionDef)]
+        self.methods = [MethodMd(item, self) for item in self.body if isinstance(item, ast.FunctionDef)]
         self.calls.extend(self.__get_method_calls())
         self.attributes = self.__get_attributes()
 
@@ -47,5 +47,5 @@ if __name__ == "__main__":
         tree = ast.parse(file.read())
         for node in ast.iter_child_nodes(tree):
             if type(node) == ast.ClassDef:
-                cd = ClassDef(node)
+                cd = ClassMd(node)
                 breakpoint()
