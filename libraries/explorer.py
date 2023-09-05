@@ -17,8 +17,6 @@ def explore(path, ignored: list = []):
         path = os.getcwd()
         directory_contents = os.listdir()
         directory_map[path] = directory_contents
-        print(f">> Path:", path)
-        print(f">> Content:", directory_contents)
         for content in directory_contents:
             os.chdir(path)
             abs_path = os.path.join(os.getcwd(), content)
