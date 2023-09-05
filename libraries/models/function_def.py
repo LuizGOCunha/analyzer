@@ -1,13 +1,18 @@
 from astunparse import unparse
+from pathlib import Path
+from typing import Union
 import ast
 import re
 
 
 class FunctionMd:
-    def __init__(self, source: ast.FunctionDef) -> None:
+    def __init__(self, source: ast.FunctionDef, location: Union[str, Path, None] = None) -> None:
         self.source = source
         self.name = self.source.name
         self.body = self.source.body
+        if isinstance(location, str):
+            location = Path(location)
+
         self.tree = ast.parse(source)
         self.arguments = self.__get_arguments()
         self.docstring = self.__get_docstring()
@@ -55,6 +60,9 @@ class FunctionMd:
             if isinstance(node, ast.Assign):
                 variables.extend([target.id for target in node.targets if isinstance(target, ast.Name)])
         return variables
+
+    def __repr__(self):
+        return f"<{self.__class__.__name__} - {self.name}>"
 
 
 if __name__ == "__main__":

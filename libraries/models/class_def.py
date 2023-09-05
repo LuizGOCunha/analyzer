@@ -1,11 +1,11 @@
 from __future__ import annotations
 import ast
-from exceptions import NonMethodError
-from function_def import FuncDef
+from models.exceptions import NonMethodError
+from models.function_def import FunctionMd
 
 
-class MethodMd(FuncDef):
-    def __init__(self, source: FuncDef, class_object: ClassMd) -> None:
+class MethodMd(FunctionMd):
+    def __init__(self, source: FunctionMd, class_object: ClassMd) -> None:
         super().__init__(source)
         self.class_object = class_object
         self.attributes = self.__get_attributes()
@@ -21,8 +21,11 @@ class MethodMd(FuncDef):
                 attributes.extend([target.attr for target in node.targets if isinstance(target, ast.Attribute)])
         return list(set(attributes))
 
+    def __repr__(self):
+        return f"<{self.__class__.__name__} - {self.class_object.name}.{self.name}>"
 
-class ClassMd(FuncDef):
+
+class ClassMd(FunctionMd):
     def __init__(self, source: ast.ClassDef) -> None:
         super().__init__(source)
         self.methods = [MethodMd(item, self) for item in self.body if isinstance(item, ast.FunctionDef)]

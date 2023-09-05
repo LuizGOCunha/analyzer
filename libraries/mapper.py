@@ -1,20 +1,52 @@
 import os
+import sys
+import ast
 
 from explorer import explore
-from importer import get_callables
 from source_parser import Parser
 from pathlib import Path
+
+from models.class_def import ClassMd
 
 
 class Analyzer:
     def __init__(self, path: str) -> None:
         self.path = path
-        self.directories = explore(path, ignored=[".git"])
-        self.files_paths: list[Path] = self.generate_files_path()
-        self.raw_map = self.__create_raw_map()
-        self.calls_map_string = self.generate_calls_map_in_string()
+        self.directories = explore(path, ignored=[".git", "venv", "__pycache__"])
+        self.files_paths: list[Path] = self.__generate_files_path()
+        self.raw_map = self.__generate_raw_map()
 
-    def generate_files_path(self):
+    def identify_max_browser_bug(self):
+        for model_object in self.raw_map.values():
+            tree_iterator = ast.iter_child_nodes(model_object.source)
+            for node in tree_iterator:
+                is_cold_method_call = (
+                    isinstance(node, ast.Expr)
+                    and isinstance(node.value, ast.Call)
+                    and isinstance(node.value.func, ast.Attribute)
+                )
+                attr_is = lambda attr: node.value.func.attr == attr
+
+                if is_cold_method_call and attr_is("set_window_size"):
+                    node = tree_iterator.__next__()
+                    if is_cold_method_call and attr_is("maximize_browser_window"):
+                        return model_object
+        return None
+
+    def __generate_raw_map(self):
+        """
+        Generate a mapping of {definition_name: definition_model}
+        """
+        raw_map = {}
+        for path in self.files_paths:
+            p = Parser(path)
+            raw_map.update({funcmd.name: funcmd for funcmd in p.functions})
+            for classmd in p.classes:
+                raw_map[classmd.name] = classmd
+                raw_map.update({methodmd.name: methodmd for methodmd in classmd.methods})
+        return raw_map
+
+    def __generate_files_path(self):
         files = []
         for path, items in self.directories.items():
             for item in items:
@@ -23,52 +55,66 @@ class Analyzer:
                     files.append(abs_path)
         return files
 
-    def generate_calls_map_in_string(self):
-        calls_map_string = {}
-        for path in self.files_paths:
-            with open(path) as file:
-                source = file.read()
-            p = Parser(source)
-            calls_map_string.update(p.encapsulated_callables())
-
-        return calls_map_string
-
-    def __create_raw_map(self) -> dict:
+    def __adjust_classmd_call(self, call):
         """
-        Create an unorganized map of an applications calls
+        Checks if the call is a Class, is so returns it's initiation
+        else returns the same call
+        """
+        if isinstance(call, ClassMd):
+            for method in call.methods:
+                if method.name == "__init__":
+                    return method
+        else:
+            return call
+
+    # As of right now it isn't able to track Classes method calls, only functions.
+    def create_calls_map(self, call_name):
+        """
+        Creates map of function objects based on information from Analyzer.
+        Receives call from inside the Analyzed directory.
         Returns a dictionary with this structure:
-        {"object_name": <object>}
+        {<FunctionMd function>: {<FunctionMd call1>: {<ClassMd 'Cls'>: {}}, <ClassMd call2>: {}}}
         """
-        raw_map = {}
-        for path in self.files_paths:
-            callables = get_callables(path)
-            if callables is not None:
-                raw_map.update({callable.__name__: callable for callable in callables if hasattr(callable, "__name__")})
-        self.raw_map = raw_map
-        return raw_map
-
-    def create_map(self, call):
         app_map = {}
+        if call_name not in self.raw_map.keys():
+            raise IndexError("call name not present in raw map")
+        else:
+            call = self.raw_map[call_name]
 
-        def internal_func(call, app_map, calls_map_string, raw_map):
+        def internal_func(self: Analyzer, call, app_map: dict):
             app_map[call] = {}
-            if call.__name__ in calls_map_string.keys():
-                for subcall_name in calls_map_string[call.__name__]:
-                    subcall = raw_map[subcall_name]
-                    app_map[call].update({subcall: {}})
-                    internal_func(subcall, app_map[call], calls_map_string, raw_map)
+            call = self.__adjust_classmd_call(call)
+            for subcall_name in call.calls:
+                if subcall_name not in self.raw_map.keys():
+                    continue
+                else:
+                    subcall = self.raw_map[subcall_name]
+                    subcall = self.__adjust_classmd_call(subcall)
+                if isinstance(subcall, ClassMd):
+                    for method in subcall.methods:
+                        if method.name == "__init__":
+                            subcall = method
+                app_map[call].update({subcall: {}})
+                internal_func(self, subcall, app_map[call])
             return app_map
 
-        return internal_func(call, app_map, self.calls_map_string, self.raw_map)
+        return internal_func(self, call, app_map)
 
 
 if __name__ == "__main__":
     a = Analyzer("/home/luiz/thoughtful_repos/support/mapper/libraries/")
-    print(a.raw_map)
+    # a = Analyzer("/home/luiz/thoughtful_repos/sb1-training-management/")
+    print(">> DIRECTORIES:")
     print(a.directories)
+    print(">> FILE PATHS:")
     print(a.files_paths)
-    print(a.calls_map_string)
-    from module import function
-
-    x = a.create_map(function)
-    print(x)
+    print(">> RAW MAP")
+    print(a.raw_map)
+    culprit = a.identify_max_browser_bug()
+    if culprit:
+        print(">> BROWSER MAX CULPRIT")
+        print(culprit)
+    print(">> CALL MAP")
+    print(a.create_calls_map("call1"))
+    # x = a.create_object_map(function)
+    # print(x)
