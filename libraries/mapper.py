@@ -17,6 +17,7 @@ class Analyzer:
         self.raw_map = self.__generate_raw_map()
 
     def identify_max_browser_bug(self):
+        culprit_list = []
         for model_object in self.raw_map.values():
             tree_iterator = ast.iter_child_nodes(model_object.source)
             for node in tree_iterator:
@@ -30,8 +31,8 @@ class Analyzer:
                 if is_cold_method_call and attr_is("set_window_size"):
                     node = tree_iterator.__next__()
                     if is_cold_method_call and attr_is("maximize_browser_window"):
-                        return model_object
-        return None
+                        culprit_list.append((model_object, node.lineno))
+        return culprit_list
 
     def __generate_raw_map(self):
         """
@@ -67,7 +68,6 @@ class Analyzer:
         else:
             return call
 
-    # As of right now it isn't able to track Classes method calls, only functions.
     def create_calls_map(self, call_name):
         """
         Creates map of function objects based on information from Analyzer.
@@ -90,10 +90,6 @@ class Analyzer:
                 else:
                     subcall = self.raw_map[subcall_name]
                     subcall = self.__adjust_classmd_call(subcall)
-                if isinstance(subcall, ClassMd):
-                    for method in subcall.methods:
-                        if method.name == "__init__":
-                            subcall = method
                 app_map[call].update({subcall: {}})
                 internal_func(self, subcall, app_map[call])
             return app_map
@@ -114,6 +110,7 @@ if __name__ == "__main__":
     if culprit:
         print(">> BROWSER MAX CULPRIT")
         print(culprit)
+        breakpoint()
     print(">> CALL MAP")
     print(a.create_calls_map("call1"))
     # x = a.create_object_map(function)
