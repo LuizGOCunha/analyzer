@@ -13,6 +13,7 @@ class Parser:
         # Should receive path, remove source internally
         if isinstance(path, str):
             path = Path(path)
+        self.path = path
         with open(path) as file:
             self.source = file.read()
         self.ast_nodes, self.imports, self.functions, self.classes = self.__get_logic_nodes()
@@ -62,9 +63,9 @@ class Parser:
             if isinstance(node, (ast.Import, ast.ImportFrom)):
                 import_nodes.append(node)
             elif isinstance(node, ast.FunctionDef):
-                func_nodes.append(FunctionMd(node))
+                func_nodes.append(FunctionMd(node, self.path))
             elif isinstance(node, ast.ClassDef):
-                class_nodes.append(ClassMd(node))
+                class_nodes.append(ClassMd(node, self.path))
         return (ast_nodes, import_nodes, func_nodes, class_nodes)
 
 

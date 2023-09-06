@@ -12,7 +12,7 @@ class FunctionMd:
         self.body = self.source.body
         if isinstance(location, str):
             location = Path(location)
-
+        self.location = location
         self.tree = ast.parse(source)
         self.arguments = self.__get_arguments()
         self.docstring = self.__get_docstring()
