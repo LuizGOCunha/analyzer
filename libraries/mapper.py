@@ -17,6 +17,12 @@ class Analyzer:
         self.raw_map = self.__generate_raw_map()
 
     def identify_max_browser_bug(self):
+        """
+        Looks for a bug belonging to this pattern of code:
+
+        b.set_window_size(1920, 1600)
+        b.maximize_browser_window()
+        """
         culprit_list = []
         for model_object in self.raw_map.values():
             tree_iterator = ast.iter_child_nodes(model_object.source)
@@ -31,7 +37,7 @@ class Analyzer:
                 if is_cold_method_call and attr_is("set_window_size"):
                     node = tree_iterator.__next__()
                     if is_cold_method_call and attr_is("maximize_browser_window"):
-                        culprit_list.append((model_object, node.lineno))
+                        culprit_list.append((model_object.location, node.lineno))
         return culprit_list
 
     def __generate_raw_map(self):
@@ -65,9 +71,12 @@ class Analyzer:
             for method in call.methods:
                 if method.name == "__init__":
                     return method
+            # If it's a class, but doesn't have a init method, simply skip
+            return None
         else:
             return call
 
+    # TODO: A way to gather code inside of blocks (for, try, if, etc)
     def create_calls_map(self, call_name):
         """
         Creates map of function objects based on information from Analyzer.
@@ -84,12 +93,16 @@ class Analyzer:
         def internal_func(self: Analyzer, call, app_map: dict):
             app_map[call] = {}
             call = self.__adjust_classmd_call(call)
+            if call is None:
+                return app_map
             for subcall_name in call.calls:
                 if subcall_name not in self.raw_map.keys():
                     continue
                 else:
                     subcall = self.raw_map[subcall_name]
                     subcall = self.__adjust_classmd_call(subcall)
+                    if subcall is None:
+                        continue
                 app_map[call].update({subcall: {}})
                 internal_func(self, subcall, app_map[call])
             return app_map
@@ -112,6 +125,12 @@ if __name__ == "__main__":
         print(culprit)
         breakpoint()
     print(">> CALL MAP")
-    print(a.create_calls_map("call1"))
+    from pprint import pformat
+
+    x = pformat(x := a.create_calls_map("task"))
+    print(x)
+    with open("file.txt", "w") as file:
+        file.write(x)
+
     # x = a.create_object_map(function)
     # print(x)
