@@ -76,7 +76,6 @@ class Analyzer:
         else:
             return call
 
-    # TODO: A way to gather code inside of blocks (for, try, if, etc)
     def create_calls_map(self, call_name):
         """
         Creates map of function objects based on information from Analyzer.
@@ -127,7 +126,7 @@ if __name__ == "__main__":
     print(">> CALL MAP")
     from pprint import pformat
 
-    x = pformat(x := a.create_calls_map("task"))
+    x = pformat(x := a.create_calls_map("call1"))
     print(x)
     with open("file.txt", "w") as file:
         file.write(x)

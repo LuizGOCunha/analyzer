@@ -19,9 +19,12 @@ class FunctionMd:
         self.vars = self.__get_variables()
         self.calls = self.__get_calls()
 
-    def __get_calls(self):
+    def __get_calls(self, tree=None):
+        if tree is None:
+            tree = self.tree
         calls = []
-        for node in ast.iter_child_nodes(self.tree):
+
+        for node in ast.iter_child_nodes(tree):
             # cold calls cases / Ex:call()
             if isinstance(node, ast.Expr) and isinstance(node.value, ast.Call):
                 # Methods
@@ -38,6 +41,9 @@ class FunctionMd:
                 # Functions
                 elif isinstance(node.value.func, ast.Name):
                     calls.append(node.value.func.id)
+            # blocks of code that need to be stepped into
+            elif isinstance(node, (ast.For, ast.Try, ast.If, ast.While)):
+                calls.extend(self.__get_calls(tree=node))
         return calls
 
     def __get_docstring(self):
@@ -69,6 +75,7 @@ if __name__ == "__main__":
     with open("/home/luiz/thoughtful_repos/support/mapper/libraries/module.py") as file:
         tree = ast.parse(file.read())
         for node in ast.iter_child_nodes(tree):
-            if type(node) == ast.FunctionDef:
+            if type(node) == ast.FunctionDef and node.name == "call1":
                 fd = FunctionMd(node)
-                print(fd.name, fd.arguments, fd.body, fd.calls, fd.docstring, fd.vars)
+                breakpoint()
+                # print(fd.name, fd.arguments, fd.body, fd.calls, fd.docstring, fd.vars)
