@@ -84,12 +84,15 @@ class Analyzer:
         {<FunctionMd function>: {<FunctionMd call1>: {<ClassMd 'Cls'>: {}}, <ClassMd call2>: {}}}
         """
         app_map = {}
+        calls_used = []
         if call_name not in self.raw_map.keys():
             raise IndexError("call name not present in raw map")
         else:
             call = self.raw_map[call_name]
 
         def internal_func(self: Analyzer, call, app_map: dict):
+            nonlocal calls_used
+            calls_used.append(call)
             app_map[call] = {}
             call = self.__adjust_classmd_call(call)
             if call is None:
@@ -100,7 +103,7 @@ class Analyzer:
                 else:
                     subcall = self.raw_map[subcall_name]
                     subcall = self.__adjust_classmd_call(subcall)
-                    if subcall is None:
+                    if subcall is None or subcall in calls_used:
                         continue
                 app_map[call].update({subcall: {}})
                 internal_func(self, subcall, app_map[call])
@@ -110,8 +113,8 @@ class Analyzer:
 
 
 if __name__ == "__main__":
-    a = Analyzer("/home/luiz/thoughtful_repos/support/mapper/libraries/")
-    # a = Analyzer("/home/luiz/thoughtful_repos/sb1-training-management/")
+    # a = Analyzer("/home/luiz/thoughtful_repos/support/mapper/libraries/")
+    a = Analyzer("/home/luiz/thoughtful_repos/sb1-training-management/")
     print(">> DIRECTORIES:")
     print(a.directories)
     print(">> FILE PATHS:")
@@ -126,7 +129,7 @@ if __name__ == "__main__":
     print(">> CALL MAP")
     from pprint import pformat
 
-    x = pformat(x := a.create_calls_map("call1"))
+    x = pformat(x := a.create_calls_map("cri_workflow"))
     print(x)
     with open("file.txt", "w") as file:
         file.write(x)
