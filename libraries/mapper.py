@@ -1,12 +1,11 @@
+import ast
 import os
 import sys
-import ast
-
-from explorer import explore
-from source_parser import Parser
 from pathlib import Path
 
+from explorer import explore
 from models.class_def import ClassMd
+from source_parser import Parser
 
 
 class Analyzer:
@@ -76,7 +75,7 @@ class Analyzer:
         else:
             return call
 
-    def create_calls_map(self, call_name):
+    def create_calls_map(self, call_name) -> dict:
         """
         Creates map of function objects based on information from Analyzer.
         Receives call from inside the Analyzed directory.
@@ -127,10 +126,10 @@ if __name__ == "__main__":
         print(culprit)
         breakpoint()
     print(">> CALL MAP")
-    from pprint import pformat
+    from pprint import pprint
 
-    x = pformat(x := a.create_calls_map("cri_workflow"))
-    print(x)
+    x = a.create_calls_map("cri_workflow")
+    pprint(x)
     with open("file.txt", "w") as file:
         file.write(x)
 

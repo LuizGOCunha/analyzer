@@ -1,9 +1,10 @@
-import re
 import ast
-import astunparse
+import re
 from pathlib import Path
-from models.function_def import FunctionMd
+
+import astunparse
 from models.class_def import ClassMd
+from models.function_def import FunctionMd
 
 
 class Parser:

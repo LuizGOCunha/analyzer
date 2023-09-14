@@ -1,8 +1,9 @@
-from astunparse import unparse
-from pathlib import Path
-from typing import Union
 import ast
 import re
+from pathlib import Path
+from typing import Union
+
+from astunparse import unparse
 
 
 class FunctionMd:
