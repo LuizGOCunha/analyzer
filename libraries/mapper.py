@@ -3,8 +3,10 @@ import os
 import sys
 from pathlib import Path
 
+from diagram_maker import diagram_maker
 from explorer import explore
 from models.class_def import ClassMd
+from python_mermaid.diagram import MermaidDiagram
 from source_parser import Parser
 
 
@@ -114,24 +116,24 @@ class Analyzer:
 if __name__ == "__main__":
     # a = Analyzer("/home/luiz/thoughtful_repos/support/mapper/libraries/")
     a = Analyzer("/home/luiz/thoughtful_repos/sb1-training-management/")
-    print(">> DIRECTORIES:")
-    print(a.directories)
-    print(">> FILE PATHS:")
-    print(a.files_paths)
-    print(">> RAW MAP")
-    print(a.raw_map)
-    culprit = a.identify_max_browser_bug()
-    if culprit:
-        print(">> BROWSER MAX CULPRIT")
-        print(culprit)
-        breakpoint()
+    # print(">> DIRECTORIES:")
+    # print(a.directories)
+    # print(">> FILE PATHS:")
+    # print(a.files_paths)
+    # print(">> RAW MAP")
+    # print(a.raw_map)
+    # culprit = a.identify_max_browser_bug()
+    # if culprit:
+    #     print(">> BROWSER MAX CULPRIT")
+    #     print(culprit)
     print(">> CALL MAP")
     from pprint import pprint
 
-    x = a.create_calls_map("cri_workflow")
-    pprint(x)
-    with open("file.txt", "w") as file:
-        file.write(x)
+    cmap = a.create_calls_map("trainer_connect_workflow")
+    pprint(cmap)
 
+    # nodes, links = diagram_maker(cmap)
+    # diagram = MermaidDiagram("diagram", nodes, links)
+    # print(diagram)
     # x = a.create_object_map(function)
     # print(x)
