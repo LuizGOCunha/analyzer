@@ -104,7 +104,7 @@ class Analyzer:
                 else:
                     subcall = self.raw_map[subcall_name]
                     subcall = self.__adjust_classmd_call(subcall)
-                    if subcall is None or subcall in calls_used[:-10]:
+                    if subcall is None or subcall in calls_used[:-3]:
                         continue
                 app_map[call].update({subcall: {}})
                 internal_func(self, subcall, app_map[call])
@@ -129,7 +129,7 @@ if __name__ == "__main__":
     print(">> CALL MAP")
     from pprint import pprint
 
-    cmap = a.create_calls_map("Process.cri_workflow")
+    cmap = a.create_calls_map("cri_workflow")
     pprint(cmap)
 
     nodes, links = diagram_maker(cmap)

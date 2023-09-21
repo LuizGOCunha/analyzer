@@ -17,7 +17,10 @@ def diagram_maker(map:dict):
                 key_node = Node(key.name)
             nodes_set.add(key_node)
             for value in values:
-                value_node = Node(value.name)
+                if isinstance(value, MethodMd):
+                    value_node = Node(f"{value.class_object.name}.{value.name}")
+                else:
+                    value_node = Node(value.name)
                 nodes_set.add(value_node)
                 links.append(Link(key_node, value_node))
             internal_func(values)

@@ -1,0 +1,278 @@
+---
+title: diagram
+---
+graph 
+set_supervisor_record["set_supervisor_record"]
+mapping.__init__["Mapping.__init__"]
+symplr_ticket_filler.fill_existing_roaster_ticket["SymplrTicketFiller.fill_existing_roaster_ticket"]
+share_point.__init__["SharePoint.__init__"]
+symplr.upload_certificate["Symplr.upload_certificate"]
+share_point.__init__["SharePoint.__init__"]
+symplr.set_stage["Symplr.set_stage"]
+share_point.auth_to_sharepoint["SharePoint.auth_to_sharepoint"]
+symplr_ticket_filler.fill_existing_roaster_ticket["SymplrTicketFiller.fill_existing_roaster_ticket"]
+share_point.auth_to_sharepoint["SharePoint.auth_to_sharepoint"]
+symplr.check_certificates_uploaded["Symplr.check_certificates_uploaded"]
+base_website.open_browser["BaseWebsite.open_browser"]
+central_reach_institute.login_to_website["CentralReachInstitute.login_to_website"]
+certificate.failed_to_process["Certificate.failed_to_process"]
+central_reach_institute.check_popup_window["CentralReachInstitute.check_popup_window"]
+set_supervisor_record["set_supervisor_record"]
+central_reach_institute.close_cookies_popup["CentralReachInstitute.close_cookies_popup"]
+symplr.find_training_by_name["Symplr.find_training_by_name"]
+symplr.create_roster_ticket["Symplr.create_roster_ticket"]
+run_status_manager.feed_status["RunStatusManager.feed_status"]
+symplr_ticket_filler.fill_new_roaster_ticket["SymplrTicketFiller.fill_new_roaster_ticket"]
+central_reach_institute.check_popup_window["CentralReachInstitute.check_popup_window"]
+symplr_ticket_filler.fill_new_roaster_ticket["SymplrTicketFiller.fill_new_roaster_ticket"]
+central_reach_institute.close_cookies_popup["CentralReachInstitute.close_cookies_popup"]
+symplr_ticket_filler.fill_new_roaster_ticket["SymplrTicketFiller.fill_new_roaster_ticket"]
+run_status_manager.feed_status["RunStatusManager.feed_status"]
+symplr_ticket_filler.fill_new_roaster_ticket["SymplrTicketFiller.fill_new_roaster_ticket"]
+process.identify_all_new_certificates_in_cri["Process.identify_all_new_certificates_in_cri"]
+process.identify_all_new_certificates_in_cri["Process.identify_all_new_certificates_in_cri"]
+central_reach_institute.download_report_via_requests["CentralReachInstitute.download_report_via_requests"]
+symplr_ticket_filler.fill_new_roaster_ticket["SymplrTicketFiller.fill_new_roaster_ticket"]
+symplr_ticket_filler.fill_new_roaster_ticket["SymplrTicketFiller.fill_new_roaster_ticket"]
+process.start_symplr["Process.start_symplr"]
+central_reach_institute.download_report_via_requests["CentralReachInstitute.download_report_via_requests"]
+symplr_ticket_filler.fill_new_roaster_ticket["SymplrTicketFiller.fill_new_roaster_ticket"]
+process.triage_certificates["Process.triage_certificates"]
+certificate.set_to_process["Certificate.set_to_process"]
+symplr_ticket_filler.fill_new_roaster_ticket["SymplrTicketFiller.fill_new_roaster_ticket"]
+central_reach_institute.set_cookies["CentralReachInstitute.set_cookies"]
+process.start_cri["Process.start_cri"]
+symplr_ticket_filler.fill_new_roaster_ticket["SymplrTicketFiller.fill_new_roaster_ticket"]
+group_data["group_data"]
+central_reach_institute.__init__["CentralReachInstitute.__init__"]
+thought_industries_report.__init__["ThoughtIndustriesReport.__init__"]
+group_data["group_data"]
+process.group_cri_certificates["Process.group_cri_certificates"]
+exception_report.get_unprocessed_cri_certificates["ExceptionReport.get_unprocessed_cri_certificates"]
+process.update_cri_exception_report["Process.update_cri_exception_report"]
+exception_report.get_unprocessed_cri_certificates["ExceptionReport.get_unprocessed_cri_certificates"]
+process.update_cri_exception_report["Process.update_cri_exception_report"]
+symplr_ticket_filler.fill_new_roaster_ticket["SymplrTicketFiller.fill_new_roaster_ticket"]
+process.identify_unprocessed_certificates_in_cri["Process.identify_unprocessed_certificates_in_cri"]
+process.update_cri_exception_report["Process.update_cri_exception_report"]
+symplr_ticket_filler.fill_new_roaster_ticket["SymplrTicketFiller.fill_new_roaster_ticket"]
+thought_industries_report.download_report["ThoughtIndustriesReport.download_report"]
+process.update_cri_exception_report["Process.update_cri_exception_report"]
+central_reach_institute.login_to_website["CentralReachInstitute.login_to_website"]
+thought_industries_report.login_thoughtindustries["ThoughtIndustriesReport.login_thoughtindustries"]
+symplr_ticket_filler.fill_new_roaster_ticket["SymplrTicketFiller.fill_new_roaster_ticket"]
+process.update_cri_exception_report["Process.update_cri_exception_report"]
+thought_industries_report.__init__["ThoughtIndustriesReport.__init__"]
+symplr_ticket_filler.fill_new_roaster_ticket["SymplrTicketFiller.fill_new_roaster_ticket"]
+process.update_cri_exception_report["Process.update_cri_exception_report"]
+central_reach_institute.set_cookies["CentralReachInstitute.set_cookies"]
+symplr_ticket_filler.fill_new_roaster_ticket["SymplrTicketFiller.fill_new_roaster_ticket"]
+process.update_cri_exception_report["Process.update_cri_exception_report"]
+base_website.open_browser["BaseWebsite.open_browser"]
+thought_industries_report.download_report["ThoughtIndustriesReport.download_report"]
+symplr_ticket_filler.fill_new_roaster_ticket["SymplrTicketFiller.fill_new_roaster_ticket"]
+process.update_cri_exception_report["Process.update_cri_exception_report"]
+thought_industries_report.login_thoughtindustries["ThoughtIndustriesReport.login_thoughtindustries"]
+symplr_ticket_filler.fill_new_roaster_ticket["SymplrTicketFiller.fill_new_roaster_ticket"]
+process.cri_workflow["Process.cri_workflow"]
+symplr.__init__["Symplr.__init__"]
+process.update_cri_exception_report["Process.update_cri_exception_report"]
+symplr_ticket_filler.fill_new_roaster_ticket["SymplrTicketFiller.fill_new_roaster_ticket"]
+process.update_cri_exception_report["Process.update_cri_exception_report"]
+symplr_ticket_filler.fill_new_roaster_ticket["SymplrTicketFiller.fill_new_roaster_ticket"]
+process.update_reports["Process.update_reports"]
+symplr.__init__["Symplr.__init__"]
+symplr_ticket_filler.fill_new_roaster_ticket["SymplrTicketFiller.fill_new_roaster_ticket"]
+record_report.add_item_by_workflow["RecordReport.add_item_by_workflow"]
+symplr_ticket_filler.fill_new_roaster_ticket["SymplrTicketFiller.fill_new_roaster_ticket"]
+red_cross.get_course_info["RedCross.get_course_info"]
+run_report.update_items_count["RunReport.update_items_count"]
+symplr_ticket_filler.fill_new_roaster_ticket["SymplrTicketFiller.fill_new_roaster_ticket"]
+record_report.add_item_by_workflow["RecordReport.add_item_by_workflow"]
+certificate.set_unprocessed["Certificate.set_unprocessed"]
+symplr_ticket_filler.fill_new_roaster_ticket["SymplrTicketFiller.fill_new_roaster_ticket"]
+record_report.add_item_by_certificate["RecordReport.add_item_by_certificate"]
+cri_certificate.build_filename["CRICertificate.build_filename"]
+certificate.failed_to_process["Certificate.failed_to_process"]
+record_report.add_item_by_certificate["RecordReport.add_item_by_certificate"]
+trainer_connect_certificate.build_training_name["TrainerConnectCertificate.build_training_name"]
+central_reach_institute.__init__["CentralReachInstitute.__init__"]
+certificate.set_to_skip["Certificate.set_to_skip"]
+run_report.update_items_count["RunReport.update_items_count"]
+mapping.__init__["Mapping.__init__"]
+red_cross.get_course_info["RedCross.get_course_info"]
+certificate.increment_retries_count["Certificate.increment_retries_count"]
+process.set_records_for_supervisor["Process.set_records_for_supervisor"]
+process.download_all_certificates_from_cri["Process.download_all_certificates_from_cri"]
+symplr_ticket_filler.fill_existing_roaster_ticket["SymplrTicketFiller.fill_existing_roaster_ticket"]
+cri_certificate.check_expiration_date["CRICertificate.check_expiration_date"]
+certificate.set_description["Certificate.set_description"]
+symplr_ticket_filler.fill_existing_roaster_ticket["SymplrTicketFiller.fill_existing_roaster_ticket"]
+trainer_connect_certificate.build_training_name["TrainerConnectCertificate.build_training_name"]
+certificate.set_to_skip["Certificate.set_to_skip"]
+symplr_ticket_filler.fill_existing_roaster_ticket["SymplrTicketFiller.fill_existing_roaster_ticket"]
+cri_certificate.build_filename["CRICertificate.build_filename"]
+certificate.increment_retries_count["Certificate.increment_retries_count"]
+central_reach_institute.search_learner_by_email["CentralReachInstitute.search_learner_by_email"]
+symplr_ticket_filler.fill_existing_roaster_ticket["SymplrTicketFiller.fill_existing_roaster_ticket"]
+certificate.set_description["Certificate.set_description"]
+cri_certificate.check_expiration_date["CRICertificate.check_expiration_date"]
+symplr_ticket_filler.fill_existing_roaster_ticket["SymplrTicketFiller.fill_existing_roaster_ticket"]
+process.update_cri_exception_report["Process.update_cri_exception_report"]
+certificate.set_unprocessed["Certificate.set_unprocessed"]
+process.update_cri_exception_report["Process.update_cri_exception_report"]
+certificate.set_to_process["Certificate.set_to_process"]
+symplr_ticket_filler.fill_existing_roaster_ticket["SymplrTicketFiller.fill_existing_roaster_ticket"]
+symplr_ticket_filler.fill_existing_roaster_ticket["SymplrTicketFiller.fill_existing_roaster_ticket"]
+process.update_cri_exception_report["Process.update_cri_exception_report"]
+process.set_records_for_supervisor["Process.set_records_for_supervisor"]
+central_reach_institute.download_matching_certificates["CentralReachInstitute.download_matching_certificates"]
+process.update_cri_exception_report["Process.update_cri_exception_report"]
+symplr_ticket_filler.fill_existing_roaster_ticket["SymplrTicketFiller.fill_existing_roaster_ticket"]
+process.update_reports["Process.update_reports"]
+central_reach_institute.search_learner_by_email["CentralReachInstitute.search_learner_by_email"]
+symplr_ticket_filler.fill_existing_roaster_ticket["SymplrTicketFiller.fill_existing_roaster_ticket"]
+process.update_cri_exception_report["Process.update_cri_exception_report"]
+central_reach_institute.navigate_to_learners_page["CentralReachInstitute.navigate_to_learners_page"]
+process.update_cri_exception_report["Process.update_cri_exception_report"]
+symplr_ticket_filler.fill_existing_roaster_ticket["SymplrTicketFiller.fill_existing_roaster_ticket"]
+act_on_element["act_on_element"]
+symplr_ticket_filler.fill_existing_roaster_ticket["SymplrTicketFiller.fill_existing_roaster_ticket"]
+process.triage_certificates["Process.triage_certificates"]
+process.update_cri_exception_report["Process.update_cri_exception_report"]
+process.group_cri_certificates["Process.group_cri_certificates"]
+central_reach_institute.navigate_to_learners_page["CentralReachInstitute.navigate_to_learners_page"]
+symplr_ticket_filler.fill_existing_roaster_ticket["SymplrTicketFiller.fill_existing_roaster_ticket"]
+process.update_cri_exception_report["Process.update_cri_exception_report"]
+process.update_cri_exception_report["Process.update_cri_exception_report"]
+act_on_element["act_on_element"]
+symplr_ticket_filler.fill_existing_roaster_ticket["SymplrTicketFiller.fill_existing_roaster_ticket"]
+process.download_all_certificates_from_cri["Process.download_all_certificates_from_cri"]
+process.update_cri_exception_report["Process.update_cri_exception_report"]
+central_reach_institute.download_matching_certificates["CentralReachInstitute.download_matching_certificates"]
+process.update_cri_exception_report["Process.update_cri_exception_report"]
+symplr_ticket_filler.fill_existing_roaster_ticket["SymplrTicketFiller.fill_existing_roaster_ticket"]
+act_on_element["act_on_element"]
+symplr_ticket_filler.fill_existing_roaster_ticket["SymplrTicketFiller.fill_existing_roaster_ticket"]
+process.update_cri_exception_report["Process.update_cri_exception_report"]
+central_reach_institute.open_tab_and_switch_back["CentralReachInstitute.open_tab_and_switch_back"]
+symplr_ticket_filler.fill_existing_roaster_ticket["SymplrTicketFiller.fill_existing_roaster_ticket"]
+wait_until_file_downloads["wait_until_file_downloads"]
+symplr_ticket_filler.fill_existing_roaster_ticket["SymplrTicketFiller.fill_existing_roaster_ticket"]
+act_on_element["act_on_element"]
+symplr_ticket_filler.fill_existing_roaster_ticket["SymplrTicketFiller.fill_existing_roaster_ticket"]
+process.start_symplr["Process.start_symplr"]
+central_reach_institute.open_tab_and_switch_back["CentralReachInstitute.open_tab_and_switch_back"]
+symplr_ticket_filler.fill_existing_roaster_ticket["SymplrTicketFiller.fill_existing_roaster_ticket"]
+wait_until_file_downloads["wait_until_file_downloads"]
+symplr_ticket_filler.__init__["SymplrTicketFiller.__init__"]
+process.update_symplr_with_cri_training_details["Process.update_symplr_with_cri_training_details"]
+symplr.upload_certificate["Symplr.upload_certificate"]
+symplr.check_trainings["Symplr.check_trainings"]
+process.update_symplr_with_cri_training_details["Process.update_symplr_with_cri_training_details"]
+symplr.set_stage["Symplr.set_stage"]
+symplr.check_trainings["Symplr.check_trainings"]
+process.identify_unprocessed_certificates_in_cri["Process.identify_unprocessed_certificates_in_cri"]
+symplr_ticket_filler.fill_existing_roaster_ticket["SymplrTicketFiller.fill_existing_roaster_ticket"]
+symplr.check_if_training_exists["Symplr.check_if_training_exists"]
+symplr.edit_roster_ticket["Symplr.edit_roster_ticket"]
+symplr_ticket_filler.__init__["SymplrTicketFiller.__init__"]
+symplr.edit_roster_ticket["Symplr.edit_roster_ticket"]
+process.start_cri["Process.start_cri"]
+symplr.create_roster_ticket["Symplr.create_roster_ticket"]
+symplr.find_training_by_name["Symplr.find_training_by_name"]
+symplr.check_certificates_uploaded["Symplr.check_certificates_uploaded"]
+symplr.find_training_by_oldtitle_attribute["Symplr.find_training_by_oldtitle_attribute"]
+symplr.find_training_by_oldtitle_attribute["Symplr.find_training_by_oldtitle_attribute"]
+symplr.check_if_training_exists["Symplr.check_if_training_exists"]
+process.cri_workflow ---> process.start_cri
+process.cri_workflow ---> process.identify_all_new_certificates_in_cri
+process.cri_workflow ---> process.identify_unprocessed_certificates_in_cri
+process.cri_workflow ---> process.group_cri_certificates
+process.cri_workflow ---> process.start_symplr
+process.cri_workflow ---> process.triage_certificates
+process.cri_workflow ---> process.download_all_certificates_from_cri
+process.cri_workflow ---> process.update_symplr_with_cri_training_details
+process.cri_workflow ---> process.update_cri_exception_report
+process.cri_workflow ---> process.update_reports
+process.cri_workflow ---> process.set_records_for_supervisor
+process.start_cri ---> central_reach_institute.__init__
+process.start_cri ---> base_website.open_browser
+process.start_cri ---> central_reach_institute.login_to_website
+central_reach_institute.__init__ ---> mapping.__init__
+mapping.__init__ ---> share_point.__init__
+share_point.__init__ ---> share_point.auth_to_sharepoint
+central_reach_institute.login_to_website ---> central_reach_institute.check_popup_window
+central_reach_institute.login_to_website ---> central_reach_institute.close_cookies_popup
+central_reach_institute.login_to_website ---> run_status_manager.feed_status
+process.identify_all_new_certificates_in_cri ---> central_reach_institute.download_report_via_requests
+central_reach_institute.download_report_via_requests ---> central_reach_institute.set_cookies
+central_reach_institute.download_report_via_requests ---> thought_industries_report.__init__
+central_reach_institute.download_report_via_requests ---> thought_industries_report.login_thoughtindustries
+central_reach_institute.download_report_via_requests ---> thought_industries_report.download_report
+process.identify_unprocessed_certificates_in_cri ---> exception_report.get_unprocessed_cri_certificates
+process.group_cri_certificates ---> group_data
+process.start_symplr ---> symplr.__init__
+process.triage_certificates ---> red_cross.get_course_info
+process.triage_certificates ---> cri_certificate.build_filename
+process.triage_certificates ---> trainer_connect_certificate.build_training_name
+process.triage_certificates ---> certificate.set_to_process
+process.triage_certificates ---> certificate.set_unprocessed
+cri_certificate.build_filename ---> cri_certificate.check_expiration_date
+process.download_all_certificates_from_cri ---> central_reach_institute.search_learner_by_email
+process.download_all_certificates_from_cri ---> central_reach_institute.download_matching_certificates
+central_reach_institute.search_learner_by_email ---> central_reach_institute.navigate_to_learners_page
+central_reach_institute.search_learner_by_email ---> act_on_element
+central_reach_institute.download_matching_certificates ---> act_on_element
+central_reach_institute.download_matching_certificates ---> central_reach_institute.open_tab_and_switch_back
+central_reach_institute.download_matching_certificates ---> wait_until_file_downloads
+process.update_symplr_with_cri_training_details ---> symplr.check_trainings
+symplr.check_trainings ---> symplr.check_if_training_exists
+symplr.check_trainings ---> symplr.edit_roster_ticket
+symplr.check_trainings ---> symplr.create_roster_ticket
+symplr.check_if_training_exists ---> symplr.find_training_by_oldtitle_attribute
+symplr.check_if_training_exists ---> symplr.find_training_by_name
+symplr.edit_roster_ticket ---> symplr_ticket_filler.__init__
+symplr.edit_roster_ticket ---> symplr_ticket_filler.fill_existing_roaster_ticket
+symplr.edit_roster_ticket ---> symplr.set_stage
+symplr.edit_roster_ticket ---> symplr.upload_certificate
+symplr_ticket_filler.fill_existing_roaster_ticket ---> symplr_ticket_filler.fill_existing_roaster_ticket
+symplr_ticket_filler.fill_existing_roaster_ticket ---> symplr_ticket_filler.fill_existing_roaster_ticket
+symplr_ticket_filler.fill_existing_roaster_ticket ---> symplr_ticket_filler.fill_existing_roaster_ticket
+symplr_ticket_filler.fill_existing_roaster_ticket ---> symplr_ticket_filler.fill_existing_roaster_ticket
+symplr_ticket_filler.fill_existing_roaster_ticket ---> symplr_ticket_filler.fill_existing_roaster_ticket
+symplr_ticket_filler.fill_existing_roaster_ticket ---> symplr_ticket_filler.fill_existing_roaster_ticket
+symplr_ticket_filler.fill_existing_roaster_ticket ---> symplr_ticket_filler.fill_existing_roaster_ticket
+symplr_ticket_filler.fill_existing_roaster_ticket ---> symplr_ticket_filler.fill_existing_roaster_ticket
+symplr_ticket_filler.fill_existing_roaster_ticket ---> symplr_ticket_filler.fill_existing_roaster_ticket
+symplr_ticket_filler.fill_existing_roaster_ticket ---> symplr_ticket_filler.fill_existing_roaster_ticket
+symplr.upload_certificate ---> set_supervisor_record
+symplr.upload_certificate ---> symplr.check_certificates_uploaded
+symplr.create_roster_ticket ---> symplr_ticket_filler.fill_new_roaster_ticket
+symplr.create_roster_ticket ---> certificate.failed_to_process
+symplr_ticket_filler.fill_new_roaster_ticket ---> symplr_ticket_filler.fill_new_roaster_ticket
+symplr_ticket_filler.fill_new_roaster_ticket ---> symplr_ticket_filler.fill_new_roaster_ticket
+symplr_ticket_filler.fill_new_roaster_ticket ---> symplr_ticket_filler.fill_new_roaster_ticket
+symplr_ticket_filler.fill_new_roaster_ticket ---> symplr_ticket_filler.fill_new_roaster_ticket
+symplr_ticket_filler.fill_new_roaster_ticket ---> symplr_ticket_filler.fill_new_roaster_ticket
+symplr_ticket_filler.fill_new_roaster_ticket ---> symplr_ticket_filler.fill_new_roaster_ticket
+symplr_ticket_filler.fill_new_roaster_ticket ---> symplr_ticket_filler.fill_new_roaster_ticket
+symplr_ticket_filler.fill_new_roaster_ticket ---> symplr_ticket_filler.fill_new_roaster_ticket
+symplr_ticket_filler.fill_new_roaster_ticket ---> symplr_ticket_filler.fill_new_roaster_ticket
+symplr_ticket_filler.fill_new_roaster_ticket ---> symplr_ticket_filler.fill_new_roaster_ticket
+certificate.failed_to_process ---> certificate.set_to_skip
+certificate.failed_to_process ---> certificate.increment_retries_count
+certificate.failed_to_process ---> certificate.set_description
+process.update_cri_exception_report ---> process.update_cri_exception_report
+process.update_cri_exception_report ---> process.update_cri_exception_report
+process.update_cri_exception_report ---> process.update_cri_exception_report
+process.update_cri_exception_report ---> process.update_cri_exception_report
+process.update_cri_exception_report ---> process.update_cri_exception_report
+process.update_cri_exception_report ---> process.update_cri_exception_report
+process.update_cri_exception_report ---> process.update_cri_exception_report
+process.update_cri_exception_report ---> process.update_cri_exception_report
+process.update_cri_exception_report ---> process.update_cri_exception_report
+process.update_cri_exception_report ---> process.update_cri_exception_report
+process.update_reports ---> record_report.add_item_by_workflow
+process.update_reports ---> run_report.update_items_count
+record_report.add_item_by_workflow ---> record_report.add_item_by_certificate
