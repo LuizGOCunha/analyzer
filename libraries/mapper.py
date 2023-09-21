@@ -104,7 +104,7 @@ class Analyzer:
                 else:
                     subcall = self.raw_map[subcall_name]
                     subcall = self.__adjust_classmd_call(subcall)
-                    if subcall is None or subcall in calls_used:
+                    if subcall is None or subcall in calls_used[:-10]:
                         continue
                 app_map[call].update({subcall: {}})
                 internal_func(self, subcall, app_map[call])
@@ -120,8 +120,8 @@ if __name__ == "__main__":
     # print(a.directories)
     # print(">> FILE PATHS:")
     # print(a.files_paths)
-    # print(">> RAW MAP")
-    # print(a.raw_map)
+    print(">> RAW MAP")
+    print(a.raw_map)
     # culprit = a.identify_max_browser_bug()
     # if culprit:
     #     print(">> BROWSER MAX CULPRIT")
@@ -129,11 +129,14 @@ if __name__ == "__main__":
     print(">> CALL MAP")
     from pprint import pprint
 
-    cmap = a.create_calls_map("trainer_connect_workflow")
+    cmap = a.create_calls_map("Process.cri_workflow")
     pprint(cmap)
 
-    # nodes, links = diagram_maker(cmap)
-    # diagram = MermaidDiagram("diagram", nodes, links)
-    # print(diagram)
+    nodes, links = diagram_maker(cmap)
+    diagram = MermaidDiagram("diagram", nodes, links)
+    with open("/home/luiz/thoughtful_repos/support/mapper/diagram.txt", "w") as file:
+        diagram_str = diagram.__str__()
+        file.write(diagram_str)
+            
     # x = a.create_object_map(function)
     # print(x)
