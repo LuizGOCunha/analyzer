@@ -6,6 +6,7 @@ from pathlib import Path
 from diagram_maker import diagram_maker
 from explorer import explore
 from models.class_def import ClassMd
+from models.unknown_func import UnknownFuncMd
 from python_mermaid.diagram import MermaidDiagram
 from source_parser import Parser
 
@@ -77,10 +78,14 @@ class Analyzer:
         else:
             return call
 
-    def create_calls_map(self, call_name) -> dict:
+    def create_calls_map(self, call_name:str, show_unknowns:bool=False) -> dict:
         """
         Creates map of function objects based on information from Analyzer.
         Receives call from inside the Analyzed directory.
+        Args:
+        - call_name(str): name of the call that you want to map
+        - show_unknowns(bool): sets if calls of unknown source should be tracked
+
         Returns a dictionary with this structure:
         {<FunctionMd function>: {<FunctionMd call1>: {<ClassMd 'Cls'>: {}}, <ClassMd call2>: {}}}
         """
@@ -100,7 +105,10 @@ class Analyzer:
                 return app_map
             for subcall_name in call.calls:
                 if subcall_name not in self.raw_map.keys():
-                    continue
+                    if show_unknowns:
+                        subcall = UnknownFuncMd(subcall_name)
+                    else:
+                        continue
                 else:
                     subcall = self.raw_map[subcall_name]
                     subcall = self.__adjust_classmd_call(subcall)
@@ -120,8 +128,8 @@ if __name__ == "__main__":
     # print(a.directories)
     # print(">> FILE PATHS:")
     # print(a.files_paths)
-    print(">> RAW MAP")
-    print(a.raw_map)
+    # print(">> RAW MAP")
+    # print(a.raw_map)
     # culprit = a.identify_max_browser_bug()
     # if culprit:
     #     print(">> BROWSER MAX CULPRIT")
