@@ -19,25 +19,26 @@ class MethodMd(FunctionMd):
             raise NonMethodError("Passed function doesn't have a first arg, make sure this is a Method definition")
 
     def __check_for_super_init(self):
-            """
-            Checks for the existance of super().__init__() calls
-            Make sure to only call this function if an "__init__" value is present among captured calls
-            """
-            for node in ast.iter_child_nodes(self.source):
-                # calls_init = isinstance(node, ast.Expr) and isinstance(node.value, ast.Call) and isinstance(node.value.func, ast.Attribute) and node.value.func.attr == "__init__"
-                # calls_super = isinstance(node.value.func.value, ast.Call) and isinstance(node.value.func.value.func, ast.Name) and node.value.func.value.func.id == "super"
-                if (isinstance(node, ast.Expr)
-                    and isinstance(node.value, ast.Call) 
-                    and isinstance(node.value.func, ast.Attribute) 
-                    and node.value.func.attr == "__init__"
-                    and isinstance(node.value.func.value, ast.Call) 
-                    and isinstance(node.value.func.value.func, ast.Name) 
-                    and node.value.func.value.func.id == "super"):
-                    correct_place = self.calls.index("__init__")
-                    parent_class = self.class_object.parents[0]
-                    self.calls.remove("__init__")
-                    self.calls.insert(correct_place, parent_class)
-
+        """
+        Checks for the existance of super().__init__() calls
+        Make sure to only call this function if an "__init__" value is present among captured calls
+        """
+        for node in ast.iter_child_nodes(self.source):
+            # calls_init = isinstance(node, ast.Expr) and isinstance(node.value, ast.Call) and isinstance(node.value.func, ast.Attribute) and node.value.func.attr == "__init__"
+            # calls_super = isinstance(node.value.func.value, ast.Call) and isinstance(node.value.func.value.func, ast.Name) and node.value.func.value.func.id == "super"
+            if (
+                isinstance(node, ast.Expr)
+                and isinstance(node.value, ast.Call)
+                and isinstance(node.value.func, ast.Attribute)
+                and node.value.func.attr == "__init__"
+                and isinstance(node.value.func.value, ast.Call)
+                and isinstance(node.value.func.value.func, ast.Name)
+                and node.value.func.value.func.id == "super"
+            ):
+                correct_place = self.calls.index("__init__")
+                parent_class = self.class_object.parents[0]
+                self.calls.remove("__init__")
+                self.calls.insert(correct_place, parent_class)
 
     def __get_attributes(self):
         attributes = []
