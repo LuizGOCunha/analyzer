@@ -11,10 +11,33 @@ class MethodMd(FunctionMd):
         super().__init__(source, location)
         self.class_object = class_object
         self.attributes = self.__get_attributes()
+        while "__init__" in self.calls:
+            self.__check_for_super_init()
         try:
             self.self_name = self.arguments[0]
         except IndexError:
             raise NonMethodError("Passed function doesn't have a first arg, make sure this is a Method definition")
+
+    def __check_for_super_init(self):
+            """
+            Checks for the existance of super().__init__() calls
+            Make sure to only call this function if an "__init__" value is present among captured calls
+            """
+            for node in ast.iter_child_nodes(self.source):
+                # calls_init = isinstance(node, ast.Expr) and isinstance(node.value, ast.Call) and isinstance(node.value.func, ast.Attribute) and node.value.func.attr == "__init__"
+                # calls_super = isinstance(node.value.func.value, ast.Call) and isinstance(node.value.func.value.func, ast.Name) and node.value.func.value.func.id == "super"
+                if (isinstance(node, ast.Expr)
+                    and isinstance(node.value, ast.Call) 
+                    and isinstance(node.value.func, ast.Attribute) 
+                    and node.value.func.attr == "__init__"
+                    and isinstance(node.value.func.value, ast.Call) 
+                    and isinstance(node.value.func.value.func, ast.Name) 
+                    and node.value.func.value.func.id == "super"):
+                    correct_place = self.calls.index("__init__")
+                    parent_class = self.class_object.parents[0]
+                    self.calls.remove("__init__")
+                    self.calls.insert(correct_place, parent_class)
+
 
     def __get_attributes(self):
         attributes = []
@@ -30,6 +53,7 @@ class MethodMd(FunctionMd):
 class ClassMd(FunctionMd):
     def __init__(self, source: ast.ClassDef, location=None) -> None:
         super().__init__(source, location)
+        self.parents = [parent.id for parent in self.source.bases]
         self.methods = [MethodMd(item, self, location) for item in self.body if isinstance(item, ast.FunctionDef)]
         self.calls.extend(self.__get_method_calls())
         self.attributes = self.__get_attributes()
