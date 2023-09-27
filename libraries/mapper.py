@@ -17,8 +17,7 @@ class Analyzer:
         self.path = path
         self.directories = explore(path, ignored=[".git", "venv", "__pycache__"])
         self.files_paths: list[Path] = self.__generate_files_path()
-        self.raw_map = self.__generate_raw_map()
-        # TODO: add calls_list for iterating all models
+        self.raw_map, self.models_list = self.__gather_call_models()
 
     def identify_max_browser_bug(self):
         """
@@ -28,13 +27,7 @@ class Analyzer:
         b.maximize_browser_window()
         """
         culprit_list = []
-        all_models = []
-        for value in self.raw_map.values():
-            if isinstance(value, list):
-                [all_models.append(model) for model in value]
-            else:
-                all_models.append(value)
-        for model_object in all_models:
+        for model_object in self.models_list:
             tree_iterator = ast.iter_child_nodes(model_object.source)
             for node in tree_iterator:
                 is_cold_method_call = (
@@ -50,21 +43,27 @@ class Analyzer:
                         culprit_list.append((model_object.location, node.lineno))
         return culprit_list
 
-    def __generate_raw_map(self):
+    def __gather_call_models(self) -> tuple[dict, list]:
         """
-        Generate a mapping of {definition_name: definition_model}
+        Generate a tuple containing raw map of models and list of all models.
+        raw_map: A dictionary where key is the calls name, a model or list of models with that name
+        models_list: Linear list of all gathered models
         """
         raw_map = {}
+        models_list = []
         for path in self.files_paths:
             p = Parser(path)
             raw_map.update({funcmd.name: funcmd for funcmd in p.functions})
             for funcmd in p.functions:
+                models_list.append(funcmd)
                 raw_map = self.__add_models_to_raw_map(funcmd, raw_map)
             for classmd in p.classes:
+                models_list.append(classmd)
                 raw_map = self.__add_models_to_raw_map(classmd, raw_map)
                 for methodmd in classmd.methods:
+                    models_list.append(methodmd)
                     raw_map = self.__add_models_to_raw_map(methodmd, raw_map)
-        return raw_map
+        return raw_map, models_list
 
     def __add_models_to_raw_map(self, model: FunctionMd | ClassMd | MethodMd | UnknownFuncMd, raw_map: dict) -> dict:
         """
@@ -169,16 +168,15 @@ if __name__ == "__main__":
     # print(a.raw_map)
     # for call in a.raw_map.values():
     #     print(call)
-    culprit = a.identify_max_browser_bug()
-    # breakpoint()
-    if culprit:
-        print(">> BROWSER MAX CULPRIT")
-        print(culprit)
+    # culprit = a.identify_max_browser_bug()
+    # if culprit:
+    #     print(">> BROWSER MAX CULPRIT")
+    #     print(culprit)
     print(">> CALL MAP")
     from pprint import pprint
 
-    cmap = a.create_calls_map("red_cross_workflow")
-    # pprint(cmap)
+    cmap = a.create_calls_map("trainer_connect_workflow")
+    pprint(cmap)
 
     nodes, links = diagram_maker(cmap)
     diagram = MermaidDiagram("diagram", nodes, links)
