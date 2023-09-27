@@ -5,7 +5,8 @@ from pathlib import Path
 
 from diagram_maker import diagram_maker
 from explorer import explore
-from models.class_def import ClassMd
+from models.class_def import ClassMd, MethodMd
+from models.function_def import FunctionMd
 from models.unknown_func import UnknownFuncMd
 from python_mermaid.diagram import MermaidDiagram
 from source_parser import Parser
@@ -17,6 +18,7 @@ class Analyzer:
         self.directories = explore(path, ignored=[".git", "venv", "__pycache__"])
         self.files_paths: list[Path] = self.__generate_files_path()
         self.raw_map = self.__generate_raw_map()
+        # TODO: add calls_list for iterating all models
 
     def identify_max_browser_bug(self):
         """
@@ -26,7 +28,13 @@ class Analyzer:
         b.maximize_browser_window()
         """
         culprit_list = []
-        for model_object in self.raw_map.values():
+        all_models = []
+        for value in self.raw_map.values():
+            if isinstance(value, list):
+                [all_models.append(model) for model in value]
+            else:
+                all_models.append(value)
+        for model_object in all_models:
             tree_iterator = ast.iter_child_nodes(model_object.source)
             for node in tree_iterator:
                 is_cold_method_call = (
@@ -50,9 +58,33 @@ class Analyzer:
         for path in self.files_paths:
             p = Parser(path)
             raw_map.update({funcmd.name: funcmd for funcmd in p.functions})
+            for funcmd in p.functions:
+                raw_map = self.__add_models_to_raw_map(funcmd, raw_map)
             for classmd in p.classes:
-                raw_map[classmd.name] = classmd
-                raw_map.update({methodmd.name: methodmd for methodmd in classmd.methods})
+                raw_map = self.__add_models_to_raw_map(classmd, raw_map)
+                for methodmd in classmd.methods:
+                    raw_map = self.__add_models_to_raw_map(methodmd, raw_map)
+        return raw_map
+
+    def __add_models_to_raw_map(self, model: FunctionMd | ClassMd | MethodMd | UnknownFuncMd, raw_map: dict) -> dict:
+        """
+        Add models to a raw_map, with all the necessary checks that it implies
+        """
+        # There's no point in adding generic methods like dunders, since they will repeat in most classes
+        if model.name[-2:] == "__" and model.name[:2] == "__":
+            return raw_map
+        # This handles calls with same name that aren't the same object, creating a list with objects or adding to it
+        if model.name in raw_map.keys():
+            if model is not raw_map[model.name]:
+                if isinstance(raw_map[model.name], list):
+                    raw_map[model.name].append(model)
+                    raw_map[model.name] = list(set(raw_map[model.name]))
+                    return raw_map
+                else:
+                    raw_map[model.name] = [raw_map[model.name], model]
+                    return raw_map
+                pass
+        raw_map[model.name] = model
         return raw_map
 
     def __generate_files_path(self):
@@ -64,10 +96,10 @@ class Analyzer:
                     files.append(abs_path)
         return files
 
-    def __adjust_classmd_call(self, call):
+    def __adjust_call(self, call: FunctionMd | ClassMd | MethodMd | UnknownFuncMd | list):
         """
-        Checks if the call is a Class, is so returns it's initiation
-        else returns the same call
+        Adjusts the call gathered from the raw_map, doing all necessary checks
+        If no adjustments are necessary, returns the same call
         """
         if isinstance(call, ClassMd):
             for method in call.methods:
@@ -75,10 +107,13 @@ class Analyzer:
                     return method
             # If it's a class, but doesn't have a init method, simply skip
             return None
+        if isinstance(call, list):
+            # TODO: do some handling to get the ideal call. As a placeholder we're returning the first one
+            return call[0]
         else:
             return call
 
-    def create_calls_map(self, call_name:str, show_unknowns:bool=False) -> dict:
+    def create_calls_map(self, call_name: str, show_unknowns: bool = False) -> dict:
         """
         Creates map of function objects based on information from Analyzer.
         Receives call from inside the Analyzed directory.
@@ -95,12 +130,14 @@ class Analyzer:
             raise IndexError("call name not present in raw map")
         else:
             call = self.raw_map[call_name]
+            if isinstance(call, list):
+                call = call[0]
 
         def internal_func(self: Analyzer, call, app_map: dict):
             nonlocal calls_used
             calls_used.append(call)
             app_map[call] = {}
-            call = self.__adjust_classmd_call(call)
+            call = self.__adjust_call(call)
             if call is None:
                 return app_map
             for subcall_name in call.calls:
@@ -111,7 +148,7 @@ class Analyzer:
                         continue
                 else:
                     subcall = self.raw_map[subcall_name]
-                    subcall = self.__adjust_classmd_call(subcall)
+                    subcall = self.__adjust_call(subcall)
                     if subcall is None or subcall in calls_used[:-3]:
                         continue
                 app_map[call].update({subcall: {}})
@@ -130,21 +167,24 @@ if __name__ == "__main__":
     # print(a.files_paths)
     # print(">> RAW MAP")
     # print(a.raw_map)
-    # culprit = a.identify_max_browser_bug()
-    # if culprit:
-    #     print(">> BROWSER MAX CULPRIT")
-    #     print(culprit)
+    # for call in a.raw_map.values():
+    #     print(call)
+    culprit = a.identify_max_browser_bug()
+    # breakpoint()
+    if culprit:
+        print(">> BROWSER MAX CULPRIT")
+        print(culprit)
     print(">> CALL MAP")
     from pprint import pprint
 
-    cmap = a.create_calls_map("cri_workflow")
-    pprint(cmap)
+    cmap = a.create_calls_map("red_cross_workflow")
+    # pprint(cmap)
 
     nodes, links = diagram_maker(cmap)
     diagram = MermaidDiagram("diagram", nodes, links)
     with open("/home/luiz/thoughtful_repos/support/mapper/diagram.txt", "w") as file:
         diagram_str = diagram.__str__()
         file.write(diagram_str)
-            
+
     # x = a.create_object_map(function)
     # print(x)
