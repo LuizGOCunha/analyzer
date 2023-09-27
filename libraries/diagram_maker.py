@@ -3,7 +3,7 @@ from models.class_def import MethodMd
 from python_mermaid.diagram import Link, MermaidDiagram, Node
 
 
-def diagram_maker(map:dict):
+def diagram_maker(map: dict):
     nodes_set = set()
     links = []
 
@@ -24,9 +24,13 @@ def diagram_maker(map:dict):
                 nodes_set.add(value_node)
                 links.append(Link(key_node, value_node))
             internal_func(values)
-    
+
     internal_func(map)
-    return list(nodes_set), links
+    entry_point_name = list(map.keys())[0].name
+    title = f"{entry_point_name} Workflow"
+    diagram = MermaidDiagram(title, list(nodes_set), links)
+    return diagram
+
 
 if __name__ == "__main__":
     # Family members
@@ -46,10 +50,6 @@ if __name__ == "__main__":
         Link(robert, amy),
     ]
 
-    chart = MermaidDiagram(
-        title="Little Women",
-        nodes=the_march_family,
-        links=family_links
-    )
+    chart = MermaidDiagram(title="Little Women", nodes=the_march_family, links=family_links)
 
     print(chart)

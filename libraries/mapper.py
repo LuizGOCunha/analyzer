@@ -179,11 +179,10 @@ if __name__ == "__main__":
     print(">> CALL MAP")
     from pprint import pprint
 
-    cmap = a.create_calls_map("trainer_connect_workflow")
+    cmap = a.create_calls_map("task")
     pprint(cmap)
 
-    nodes, links = diagram_maker(cmap)
-    diagram = MermaidDiagram("diagram", nodes, links)
+    diagram = diagram_maker(cmap)
     with open("/home/luiz/thoughtful_repos/support/mapper/diagram.txt", "w") as file:
         diagram_str = diagram.__str__()
         file.write(diagram_str)
