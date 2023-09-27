@@ -1,6 +1,5 @@
 import ast
 import os
-import sys
 from pathlib import Path
 
 from diagram_maker import diagram_maker
@@ -82,7 +81,6 @@ class Analyzer:
                 else:
                     raw_map[model.name] = [raw_map[model.name], model]
                     return raw_map
-                pass
         raw_map[model.name] = model
         return raw_map
 
@@ -94,6 +92,12 @@ class Analyzer:
                 if abs_path.is_file() and abs_path.suffix == ".py":
                     files.append(abs_path)
         return files
+
+    def __handle_list_of_models(self, model_list):
+        """
+        Centralization of the way to handle list of models inside the raw_map
+        """
+        return model_list[0]
 
     def __adjust_call(self, call: FunctionMd | ClassMd | MethodMd | UnknownFuncMd | list):
         """
@@ -108,7 +112,7 @@ class Analyzer:
             return None
         if isinstance(call, list):
             # TODO: do some handling to get the ideal call. As a placeholder we're returning the first one
-            return call[0]
+            return self.__handle_list_of_models(call)
         else:
             return call
 
@@ -130,7 +134,7 @@ class Analyzer:
         else:
             call = self.raw_map[call_name]
             if isinstance(call, list):
-                call = call[0]
+                call = self.__handle_list_of_models(call)
 
         def internal_func(self: Analyzer, call, app_map: dict):
             nonlocal calls_used
