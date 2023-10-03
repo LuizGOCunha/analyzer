@@ -9,6 +9,7 @@ def explore(path, ignored: list = []):
     {"path/to/directory" : [list, of, items]}
     """
     directory_map = {}
+    current_dir = os.getcwd()
 
     def func(path):
         nonlocal ignored
@@ -26,6 +27,9 @@ def explore(path, ignored: list = []):
                 func(abs_path)
 
     func(path)
+
+    # Resets path
+    os.chdir(current_dir)
     return directory_map
 
 

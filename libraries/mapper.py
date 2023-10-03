@@ -2,12 +2,11 @@ import ast
 import os
 from pathlib import Path
 
-from diagram_maker import diagram_maker
+from diagram_maker import Diagram
 from explorer import explore
 from models.class_def import ClassMd, MethodMd
 from models.function_def import FunctionMd
 from models.unknown_func import UnknownFuncMd
-from python_mermaid.diagram import MermaidDiagram
 from source_parser import Parser
 
 
@@ -163,7 +162,7 @@ class Analyzer:
 
 if __name__ == "__main__":
     # a = Analyzer("/home/luiz/thoughtful_repos/support/mapper/libraries/")
-    a = Analyzer("/home/luiz/thoughtful_repos/sb1-training-management/")
+    a = Analyzer("/home/luiz/thoughtful_repos/verisk3-data-entry/")
     # print(">> DIRECTORIES:")
     # print(a.directories)
     # print(">> FILE PATHS:")
@@ -182,10 +181,8 @@ if __name__ == "__main__":
     cmap = a.create_calls_map("task")
     pprint(cmap)
 
-    diagram = diagram_maker(cmap)
-    with open("/home/luiz/thoughtful_repos/support/mapper/diagram.txt", "w") as file:
-        diagram_str = diagram.__str__()
-        file.write(diagram_str)
+    diagram = Diagram(cmap)
+    diagram.create_diagram_file("diagram.txt")
 
     # x = a.create_object_map(function)
     # print(x)
