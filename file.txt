@@ -1,4 +1,0 @@
-{<function func1 at 0x7fd1961028b0>: {<function func2 at 0x7fd196102790>: {<function pprint at 0x7fd196101040>: {},
-                                                                           <function func_x at 0x7fd196102670>: {}},
-                                      <function func3 at 0x7fd196102820>: {<function func2 at 0x7fd196102790>: {<function pprint at 0x7fd196101040>: {},
-                                                                                                                <function func_x at 0x7fd196102670>: {}}}}}
