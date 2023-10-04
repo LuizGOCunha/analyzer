@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import ast
 
-from models.exceptions import NonMethodError
-from models.function_def import FunctionMd
+from libraries.models.exceptions import NonMethodError
+from libraries.models.function_def import FunctionMd
 
 
 class MethodMd(FunctionMd):

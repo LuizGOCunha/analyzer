@@ -2,12 +2,12 @@ import ast
 import os
 from pathlib import Path
 
-from diagram_maker import Diagram
-from explorer import explore
-from models.class_def import ClassMd, MethodMd
-from models.function_def import FunctionMd
-from models.unknown_func import UnknownFuncMd
-from source_parser import Parser
+from libraries.diagram_maker import Diagram
+from libraries.explorer import explore
+from libraries.models.class_def import ClassMd, MethodMd
+from libraries.models.function_def import FunctionMd
+from libraries.models.unknown_func import UnknownFuncMd
+from libraries.source_parser import Parser
 
 
 class Analyzer:
@@ -169,7 +169,7 @@ class Analyzer:
         - path(str | Path | None): path for thecreation of the diagram file, if not given, returns the diagram as string
         """
         cmap = self.create_calls_map(call_name, show_unknown)
-        diagram = Diagram(cmap, f"{call_name} workflow")
+        diagram = Diagram(map=cmap, diagram_title=f"{call_name} workflow")
         if path is None:
             return diagram.diagram_code
         else:
