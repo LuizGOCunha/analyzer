@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from models.class_def import MethodMd
+from libraries.models.class_def import MethodMd
 from python_mermaid.diagram import Link, MermaidDiagram, Node
 
 
@@ -13,9 +13,9 @@ class Diagram:
     def __init__(self, map: dict, diagram_title: str = "Workflow Diagram") -> None:
         self.map = map
         self.diagram_title = diagram_title
-        self.diagram_code = self.__diagram_maker()
+        self.diagram_code = self.__diagram_maker(self.diagram_title)
 
-    def __diagram_maker(self, diagram_title: str = "Workflow Diagram") -> str:
+    def __diagram_maker(self, diagram_title: str) -> str:
         """
         Creates the Mermaid code based on the dictionary map of calls from Analyzer
         """
