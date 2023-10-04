@@ -159,6 +159,22 @@ class Analyzer:
 
         return internal_func(self, call, app_map)
 
+    def create_diagram(self, call_name: str, show_unknown: bool = False, path: str | Path | None = None):
+        """
+        Creates the code for a mermaid diagram that maps the calls inside a repository
+        Only needs the call name that should be mapped
+        Args:
+        - call_name(str): name of the call that you want to map
+        - show_unknowns(bool): sets if calls of unknown source should be tracked
+        - path(str | Path | None): path for thecreation of the diagram file, if not given, returns the diagram as string
+        """
+        cmap = self.create_calls_map(call_name, show_unknown)
+        diagram = Diagram(cmap, f"{call_name} workflow")
+        if path is None:
+            return diagram.diagram_code
+        else:
+            return diagram.create_diagram_file(path)
+
 
 if __name__ == "__main__":
     # a = Analyzer("/home/luiz/thoughtful_repos/support/mapper/libraries/")
