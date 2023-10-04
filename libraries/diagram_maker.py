@@ -13,7 +13,7 @@ class Diagram:
     def __init__(self, map: dict, diagram_title: str = "Workflow Diagram") -> None:
         self.map = map
         self.diagram_title = diagram_title
-        self.diagram = self.__diagram_maker()
+        self.diagram_code = self.__diagram_maker()
 
     def __diagram_maker(self, diagram_title: str = "Workflow Diagram") -> str:
         """
@@ -50,7 +50,7 @@ class Diagram:
         Facilitating the process of copying the code to mermaid
         """
         with open(path, "w") as file:
-            file.write(self.diagram)
+            file.write(self.diagram_code)
 
 
 if __name__ == "__main__":
