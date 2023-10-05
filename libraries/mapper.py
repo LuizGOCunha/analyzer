@@ -51,7 +51,6 @@ class Analyzer:
         models_list = []
         for path in self.files_paths:
             p = Parser(path)
-            raw_map.update({funcmd.name: funcmd for funcmd in p.functions})
             for funcmd in p.functions:
                 models_list.append(funcmd)
                 raw_map = self.__add_models_to_raw_map(funcmd, raw_map)
@@ -67,7 +66,6 @@ class Analyzer:
         """
         Add models to a raw_map, with all the necessary checks that it implies
         """
-        # There's no point in adding generic methods like dunders, since they will repeat in most classes
         if model.name[-2:] == "__" and model.name[:2] == "__":
             return raw_map
         # This handles calls with same name that aren't the same object, creating a list with objects or adding to it
@@ -92,10 +90,13 @@ class Analyzer:
                     files.append(abs_path)
         return files
 
-    def __handle_list_of_models(self, model_list):
+    def __handle_list_of_models(self, model_list: list[FunctionMd]):
         """
         Centralization of the way to handle list of models inside the raw_map
         """
+        for model in model_list:
+            if model.location.name == "task.py":
+                return model
         return model_list[0]
 
     def __adjust_call(self, call: FunctionMd | ClassMd | MethodMd | UnknownFuncMd | list):
