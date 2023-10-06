@@ -139,9 +139,9 @@ class Analyzer:
         def internal_func(self: Analyzer, call, app_map: dict):
             nonlocal calls_used
             calls_used.append(call)
+            call = self.__adjust_call(call)
             if call not in app_map.keys():
                 app_map[call] = {}
-            call = self.__adjust_call(call)
             if call is None:
                 return app_map
             for subcall_name in call.calls:
