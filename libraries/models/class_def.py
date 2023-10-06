@@ -13,10 +13,19 @@ class MethodMd(FunctionMd):
         self.attributes = self.__get_attributes()
         while "__init__" in self.calls:
             self.__check_for_super_init()
-        try:
-            self.self_name = self.arguments[0]
-        except IndexError:
-            raise NonMethodError("Passed function doesn't have a first arg, make sure this is a Method definition")
+        if self.__is_static_method():
+            self.self_name = None
+        else:
+            try:
+                self.self_name = self.arguments[0]
+            except IndexError:
+                raise NonMethodError("Passed function doesn't have a first arg, make sure this is a Method definition")
+
+    def __is_static_method(self):
+        for decorator in self.source.decorator_list:
+            if isinstance(decorator, ast.Name) and decorator.id == "staticmethod":
+                return True
+        return False
 
     def __check_for_super_init(self):
         """
