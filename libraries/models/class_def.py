@@ -12,7 +12,11 @@ class MethodMd(FunctionMd):
         self.class_object = class_object
         self.attributes = self.__get_attributes()
         while "__init__" in self.calls:
+            calls_before = self.calls
             self.__check_for_super_init()
+            calls_after = self.calls
+            if calls_before == calls_after:
+                break
         if self.__is_static_method():
             self.self_name = None
         else:
