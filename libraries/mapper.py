@@ -139,7 +139,8 @@ class Analyzer:
         def internal_func(self: Analyzer, call, app_map: dict):
             nonlocal calls_used
             calls_used.append(call)
-            app_map[call] = {}
+            if call not in app_map.keys():
+                app_map[call] = {}
             call = self.__adjust_call(call)
             if call is None:
                 return app_map
@@ -154,7 +155,8 @@ class Analyzer:
                     subcall = self.__adjust_call(subcall)
                     if subcall is None or subcall in calls_used[:-3]:
                         continue
-                app_map[call].update({subcall: {}})
+                # Removed when realized it's unnecessary logic, will do some auditing before deleting completely
+                # app_map[call].update({subcall: {}})
                 internal_func(self, subcall, app_map[call])
             return app_map
 
