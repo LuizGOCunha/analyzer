@@ -43,7 +43,7 @@ class FunctionMd:
                 elif isinstance(node.value.func, ast.Name):
                     calls.append(node.value.func.id)
             # blocks of code that need to be stepped into
-            elif isinstance(node, (ast.For, ast.Try, ast.If, ast.While)):
+            elif isinstance(node, (ast.For, ast.Try, ast.If, ast.While, ast.With)):
                 calls.extend(self.__get_calls(tree=node))
         return calls
 
