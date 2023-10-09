@@ -177,31 +177,3 @@ class Analyzer:
             return diagram.diagram_code
         else:
             return diagram.create_diagram_file(path)
-
-
-if __name__ == "__main__":
-    # a = Analyzer("/home/luiz/thoughtful_repos/support/mapper/libraries/")
-    a = Analyzer("/home/luiz/thoughtful_repos/verisk3-data-entry/")
-    # print(">> DIRECTORIES:")
-    # print(a.directories)
-    # print(">> FILE PATHS:")
-    # print(a.files_paths)
-    # print(">> RAW MAP")
-    # print(a.raw_map)
-    # for call in a.raw_map.values():
-    #     print(call)
-    # culprit = a.identify_max_browser_bug()
-    # if culprit:
-    #     print(">> BROWSER MAX CULPRIT")
-    #     print(culprit)
-    print(">> CALL MAP")
-    from pprint import pprint
-
-    cmap = a.create_calls_map("task")
-    pprint(cmap)
-
-    diagram = Diagram(cmap)
-    diagram.create_diagram_file("diagram.txt")
-
-    # x = a.create_object_map(function)
-    # print(x)
